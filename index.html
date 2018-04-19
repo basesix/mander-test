@@ -9,9 +9,50 @@
 		<script type="text/javascript" src="distributionTest.js" charset="utf-8"></script>
 		<script type="text/javascript">
 			var margin = 10;
-			var districts = 50;
-			var dist = generateDistribution(margin, districts);
-			console.log(dist);
+			var districts = 20;
+			var dists = generateDistribution(margin, districts);
+			console.log(dists);
+			
+			var stats = getDistributionStats(dists);
+			
+			var main = document.querySelector('#main');
+			
+			dists.forEach(function(d){
+				var div = document.createElement('div');
+				var districtSpan = document.createElement('div');
+				districtSpan.textContent = 'District: ' + d.number;
+				div.appendChild(districtSpan);
+				
+				var aSpan = document.createElement('div');
+				aSpan.textContent = '%a: ' + d.a;
+				div.appendChild(aSpan);
+				
+				var bSpan = document.createElement('div');
+				bSpan.textContent = '%b: ' + d.b;
+				div.appendChild(bSpan);
+				
+				var rSpan = document.createElement('div');
+				rSpan.textContent = 'Representative: ' + d.winner;
+				div.appendChild(rSpan);
+				
+				main.appendChild(div);
+			});
+			
+			var statsDiv = document.createElement('div');
+			var statsTitle = document.createElement('div');
+			statsTitle.textContent = "Result Statistics:";
+			statsDiv.appendChild(statsTitle);
+			
+			var marginDiv = document.createElement('div');
+			marginDiv.textContent = 'Voter margin: +' + margin + '% a';
+			statsDiv.appendChild(marginDiv);
+			
+			var repMargin = (stats.voteResults.winsApct - stats.voteResults.winsBpct)*100;
+			var repMarginDiv = document.createElement('div');
+			repMarginDiv.textContent = 'Representative margin: +' + repMargin + '% a';
+			statsDiv.appendChild(repMarginDiv);
+			
+			main.appendChild(statsDiv);			
 		</script>
     </body>
 </html>
